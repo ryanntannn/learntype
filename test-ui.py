@@ -26,27 +26,9 @@ state = {
 
 def main():
     """Main function when the program is run."""
+    global state
     window = ui.init_window()
-
-    # Callback function for when a key is pressed
-    def key_pressed(key):
-        """Callback function for when a key is pressed."""
-        global state
-        # Update the state based on the key pressed
-        state = game.on_key_press(key, state)
-
-        # Redraw the game window
-        ui.draw_ui(window, state)
-
-    # Bind the keypress event to the window
-    input.bind_keypress_event(window, key_pressed)
-
-    # Initialize the game state
-    state = load.init_game_state()
-
-    # Draw the first game window
     ui.draw_ui(window, state)
-
     window.mainloop()
 
 

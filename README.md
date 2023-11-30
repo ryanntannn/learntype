@@ -20,6 +20,20 @@ LearnType is a typing game that helps you memorize from a list of words. It is a
 python3 main.py
 ```
 
+## Testing
+
+### Unit tests
+
+```
+python3 -m unittest discover
+```
+
+### UI testing
+
+```
+python3 test-ui.py
+```
+
 ## Python coding standards
 
 - [PEP 8 -- Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/) - Comply to the PEP 8 coding standard, use the autopep8 extension for Visual Studio Code to format your code.
