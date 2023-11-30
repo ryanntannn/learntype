@@ -23,4 +23,6 @@ def draw_game_window(window, state: dict):
 	clear_window(window)
 	# TODO: Draw score at the top right corner of the window
 
+	window.columnconfigure(0, weight=1)
+
 	# TODO: Draw current text based on text, char_states, and cursor_index
