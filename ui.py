@@ -24,6 +24,10 @@ def clear_window(window):
 def draw_ui(window, state: dict):
     """Draw a text area with the given the current game state."""
     clear_window(window)
+    # stringify the game state and display it in the window
+    text = str(state)
+    text_area = Label(window, text=text)
+    text_area.pack()
     # TODO: Draw the game screen if the game is not complete, otherwise draw the end screen
 
 
