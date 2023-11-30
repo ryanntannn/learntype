@@ -4,10 +4,13 @@ def on_key_press(event, _state: dict):
 	
 	# Refer to main.py for the state key schema
 
+	# TODO: Handle edge case when game is complete, i.e. cursor_index == len(text)
+
 	# TODO: Handle edge case when backspace is pressed
 
 	#	TODO: Check if the key pressed is the correct key based on the cursor index and the text
 
 	# TODO: Update the score and char_states based on the key pressed
+	
 
 	return state
