@@ -19,7 +19,8 @@ state = {
         0,
     ],  # 0 = untyped, 1 = correct, 2 = incorrect
     "cursor_index": 0,  # Index of the cursor in the text
-    "previous_timestamp": -1,  # Timestamp of the previous keypress, -1 if no previous keypress
+    # Timestamp of the previous keypress, -1 if no previous keypress
+    "previous_timestamp": -1,
     "is_complete": False,
 }
 
@@ -40,6 +41,7 @@ def main():
 
     # Bind the keypress event to the window
     input.bind_keypress_event(window, key_pressed)
+    input.bind_backspace_event(window, key_pressed)
 
     # Initialize the game state
     state = load.init_game_state()

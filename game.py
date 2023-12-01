@@ -12,6 +12,11 @@ def handle_game_complete(state: dict):  # Mutates the state
     # TODO: Set the is_complete key in the state to True
 
 
+def is_backspace(key):
+    """Return True if the key is a backspace, False otherwise."""
+    return False  # TODO: Implement this function
+
+
 def handle_backspace(state: dict):
     """Handle the backspace key."""
     # TODO: Should decrease the cursor index by 1 if the cursor index is not 0
@@ -46,8 +51,7 @@ def on_key_press(key, _state: dict):
     previous_timestamp = _state["previous_timestamp"]
     timestamp = time.time()
     delta_time = timestamp - previous_timestamp
-    state["previous_timestamp"] = timestamp
-    print(state["score"], delta_time)
+    print(state["score"], delta_time, key)
 
     # Refer to main.py for the state key schema
 
@@ -57,4 +61,6 @@ def on_key_press(key, _state: dict):
 
     # TODO: Check if the key pressed is the correct key based on the cursor index and the text, and handle it accordingly
 
+    # Last step: Update the previous_timestamp key in the state
+    state["previous_timestamp"] = timestamp
     return state

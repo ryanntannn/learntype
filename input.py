@@ -5,3 +5,12 @@ def bind_keypress_event(window, callback):
         callback(_event.char)
 
     window.bind("<Key>", _callback)
+
+
+def bind_backspace_event(window, callback):
+    """Bind a backspace event to the window. The callback function is called when the backspace key is pressed."""
+
+    def _callback(_event):
+        callback("Backspace")
+
+    window.bind("<BackSpace>", _callback)
