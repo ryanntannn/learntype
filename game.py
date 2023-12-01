@@ -3,11 +3,7 @@ import time
 
 def is_game_complete(state: dict):
     """Return True if the game is complete, False otherwise."""
-    if state["cursor_index"]==len(state["text"]):
-        return True
-    else:
-        return False
-    #return state["cursor_index"] == len(state["text"])  # TODO: Implement this function
+    return state["cursor_index"] == len(state["text"])  # TODO: Implement this function
     # return False  # TODO: Implement this function
 
 
