@@ -3,12 +3,22 @@ import time
 
 def is_game_complete(state: dict):
     """Return True if the game is complete, False otherwise."""
-    return state["cursor_index"] == len(state["text"])  # TODO: Implement this function
+    if state["cursor_index"]==len(state["text"]):
+        return True
+    else:
+        return False
+    #return state["cursor_index"] == len(state["text"])  # TODO: Implement this function
     # return False  # TODO: Implement this function
 
 
 def handle_game_complete(state: dict):  # Mutates the state
     """Handle the game completion."""
+    result=is_game_complete
+    if result ==True:
+        state['is_complete']= True
+    else:
+        state['is_complete']= False
+        
     # TODO: Set the is_complete key in the state to True
 
 
@@ -19,6 +29,9 @@ def is_backspace(key):
 
 def handle_backspace(state: dict):
     """Handle the backspace key."""
+    
+
+
     # TODO: Should decrease the cursor index by 1 if the cursor index is not 0
     # TODO: Should not change the cursor index if the cursor index is 0
     # TODO: Should update the char_states based on the cursor index
