@@ -27,6 +27,7 @@ state = {
 
 def main():
     """Main function when the program is run."""
+    global state
     window = ui.init_window()
 
     # Callback function for when a key is pressed

@@ -3,14 +3,7 @@ import input
 import game
 import load
 
-state = {
-    "score": 0,
-    "text": "Hello world!",  # TODO: Make this a random string of characters
-    "char_states": [0 for _ in range(12)],  # 0 = untyped, 1 = correct, 2 = incorrect
-    "cursor_index": 0,  # Index of the cursor in the text
-    "previous_timestamp": -1,  # Timestamp of the previous keypress, -1 if no previous keypress
-    "is_complete": False,
-}
+state = load.temp_init_game_state()
 
 
 def main():
