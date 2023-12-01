@@ -17,12 +17,13 @@ def handle_game_complete(state: dict):  # Mutates the state
 
 def is_backspace(key):
     """Return True if the key is a backspace, False otherwise."""
-    return key == "<BackSpace>"  # TODO: Implement this function
+    return key == "Backspace"  # TODO: Implement this function
 
 
 def handle_backspace(state: dict):
     """Handle the backspace key."""
-    
+    result= is_backspace('key')
+
 
 
     # TODO: Should decrease the cursor index by 1 if the cursor index is not 0
@@ -76,7 +77,7 @@ def on_key_press(key, _state: dict):
     if is_backspace(key):
         handle_backspace(state["text"])
         # TODO: Handle edge case when backspace is pressed
-    if is_key_correct("text"):
+    if is_key_correct("text",state=dict):
         handle_correct_key("text")
         # TODO: Check if the key pressed is the correct key based on the cursor index and the text, and handle it accordingly
 
