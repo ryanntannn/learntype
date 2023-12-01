@@ -17,7 +17,8 @@ TEST_STATE = {
         0,
     ],  # 0 = untyped, 1 = correct, 2 = incorrect
     "cursor_index": 0,  # Index of the cursor in the text
-    "previous_timestamp": -1,  # Timestamp of the previous keypress, -1 if no previous keypress
+    # Timestamp of the previous keypress, -1 if no previous keypress
+    "previous_timestamp": -1,
     "is_complete": False,
 }
 
@@ -37,6 +38,12 @@ class TestGame(unittest.TestCase):
         game.handle_game_complete(_test_state)
         # Should set is_complete to True
         self.assertTrue(_test_state["is_complete"])
+
+    def test_is_backspace(self):
+        # Should be true when the key is a backspace
+        self.assertTrue(game.is_backspace("Backspace"))
+        # Should be false when the key is not a backspace
+        self.assertFalse(game.is_backspace("h"))
 
     def test_handle_backspace(self):
         _test_state = TEST_STATE.copy()
