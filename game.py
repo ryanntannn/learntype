@@ -72,15 +72,17 @@ def on_key_press(key, _state: dict):
 
     # Refer to main.py for the state key schema
 
-if cursor_index == len(text):
+    if state["cursor_index"] == len(text):
     # TODO: Handle edge case when game is complete, i.e. cursor_index == len(text)
+        pass
 
+    if is_backspace(key_pressed):
+        handle_backspace("text")
+        # TODO: Handle edge case when backspace is pressed
+    if is_key_correct("text"):
+        handle_correct_key("text")
+        # TODO: Check if the key pressed is the correct key based on the cursor index and the text, and handle it accordingly
 
-    # TODO: Handle edge case when backspace is pressed
-if is_backspace(key_pressed):
-
-    # TODO: Check if the key pressed is the correct key based on the cursor index and the text, and handle it accordingly
-
-    # Last step: Update the previous_timestamp key in the state
-    state["previous_timestamp"] = timestamp
-    return state
+        # Last step: Update the previous_timestamp key in the state
+        state["previous_timestamp"] = timestamp
+        #return state
