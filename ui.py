@@ -85,7 +85,7 @@ def draw_game_ui(window, state: dict):
     text_data = state['text']
     
     cursor = state['cursor_index']
-    print(text_data[cursor])
+    print("Cursor Index: ", text_data[cursor])
 
 
     #Set colors
@@ -93,6 +93,9 @@ def draw_game_ui(window, state: dict):
     _text.tag_configure("red", background="red", foreground="black")
     _text.tag_configure("green", foreground="white")
     _text.tag_configure("grey", foreground="grey")
+    
+    _text.tag_configure("location", underline=TRUE, foreground="grey")
+    
 
     for i in range(len(state['char_states'])):
         #print(state['char_states'][i])
@@ -104,9 +107,14 @@ def draw_game_ui(window, state: dict):
         elif state['char_states'][i] == 2:
             #Green
             _text.insert(END, text_data[i], "green")
-        else:
+        elif state["char_states"][i] == 0:
             #Grey
-            _text.insert(END, text_data[i], "grey")
+
+            #Show cursor in current location
+            if cursor == i:
+                _text.insert(END, text_data[i], "location")
+            else:
+                _text.insert(END, text_data[i], "grey")
 
     
     _text.place(x=10, y=10, width=box_width)
