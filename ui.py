@@ -88,9 +88,9 @@ def draw_game_ui(window, state: dict):
 
     # Set colors
     _text = Text(window, wrap=WORD, font=(FONT, 18))
-    _text.tag_configure("red", background="red", foreground="black")
-    _text.tag_configure("green", foreground="white")
-    _text.tag_configure("grey", foreground="grey")
+    _text.tag_configure("wrong", background="red", foreground="black")
+    _text.tag_configure("correct", foreground="white")
+    _text.tag_configure("untyped", foreground="grey")
 
     _text.tag_configure("location", underline=TRUE, foreground="grey")
 
@@ -98,10 +98,10 @@ def draw_game_ui(window, state: dict):
 
         if state['char_states'][i] == 1:
             # Red
-            _text.insert(END, text_data[i], "red")
+            _text.insert(END, text_data[i], "correct")
         elif state['char_states'][i] == 2:
             # Green
-            _text.insert(END, text_data[i], "green")
+            _text.insert(END, text_data[i], "wrong")
         elif state["char_states"][i] == 0:
             # Grey
 
@@ -109,7 +109,7 @@ def draw_game_ui(window, state: dict):
             if cursor == i:
                 _text.insert(END, text_data[i], "location")
             else:
-                _text.insert(END, text_data[i], "grey")
+                _text.insert(END, text_data[i], "untyped")
 
     _text.place(x=10, y=10, width=box_width)
     _text.config(highlightthickness=0, borderwidth=0,
