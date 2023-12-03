@@ -14,10 +14,7 @@ def is_game_complete(state: dict):
 def handle_game_complete(state: dict):  # Mutates the state
     """Handle the game completion."""
     result=is_game_complete(state)
-    if result == True:
-        state['is_complete'] = True
-    else:
-        state['is_complete'] = False
+    state['is_complete'] = result
         
     # TODO: Set the is_complete key in the state to True
 
@@ -31,11 +28,11 @@ def handle_backspace(state: dict):
     """Handle the backspace key."""
 
     # TODO: Should decrease the cursor index by 1 if the cursor index is not 0
-    if cursor_index != 0:
-        cursor_index -= 1
+    if state["cursor_index"] != 0:
+        state["cursor_index"] -= 1
     # TODO: Should not change the cursor index if the cursor index is 0
     # TODO: Should update the char_states based on the cursor index
-    char_states = is_key_correct(state)
+    state["char_states"] = is_key_correct(state["cursor_index"])
 
 
 def is_key_correct(key, state: dict):
@@ -74,12 +71,12 @@ def on_key_press(key, _state: dict):
 
     # Refer to main.py for the state key schema
 
-    if state["cursor_index"] == len(text):
+    if state["cursor_index"] == len(state["text"]):
     # TODO: Handle edge case when game is complete, i.e. cursor_index == len(text)
         pass
 
-    if is_backspace(key_pressed):
-        handle_backspace("text")
+    if is_backspace(key):
+        handle_backspace(state["text"])
         # TODO: Handle edge case when backspace is pressed
     if is_key_correct("text"):
         handle_correct_key("text")
