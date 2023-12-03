@@ -2,6 +2,9 @@
 
 from tkinter import *
 import sys
+from tkinter.font import BOLD
+import main
+
 
 # Window size in pixels
 WINDOW_X = 350
@@ -10,9 +13,10 @@ WINDOW_Y = 200
 IS_MAC = sys.platform == "darwin"
 
 FONT = "Menlo" if IS_MAC else "Consolas"
-BACKGROUND_COLOR = "#323437"  # HEX format
 
-print(sys.platform)
+# Background
+BACKGROUND_COLOR = "#323437"  # HEX format
+FILE_PATH = "score_test1.jpeg"
 
 
 def window_size(window):
@@ -32,7 +36,7 @@ def init_window():
     window.resizable(False, False)
     window.title("LearnType")
     _window_size = window_size(window)
-    window.configure(bg=BACKGROUND_COLOR)
+    window.configure(bg=BACKGROUND_COLOR, cursor="dotbox")
     WINDOW_X = _window_size[0] - 10 if IS_MAC else _window_size[0]
     WINDOW_Y = _window_size[1] - 70 if IS_MAC else _window_size[1]
 
@@ -49,45 +53,52 @@ def clear_window(window):
 def draw_ui(window, state: dict):
     """Draw a text area with the given the current game state."""
     clear_window(window)
-    # stringify the game state and display it in the window
-    text = str(state)
-    # score = str(state['score'])
-    # print(score)
-    print(text)
-    text_area = Label(window, text=text)
-    # text_area.pack()
-
-    text_area.configure(font=(FONT, 12))
 
     # Draw the game screen if the game is not complete, otherwise draw the end screen
     if state['is_complete']:
         # End Screen
+        txt = Label(window, text="Game Over!", background=BACKGROUND_COLOR, font=(
+            FONT, 60), foreground="#323535", bg="#e2b714")
+        txt.pack(side="top", fill=X, expand=False)
         draw_end_screen_ui(window, state)
     else:
         # Normal Screen
+        txt = Label(window, text="Game On!", background=BACKGROUND_COLOR, font=(
+            FONT, 60), foreground="#323535", bg="#e2b714")
+        txt.pack(side="top", fill=X, expand=False)
         draw_game_ui(window, state)
 
 
 def draw_game_ui(window, state: dict):
     """Draw the game screen with the given game state."""
     global BACKGROUND_COLOR
+    box_width = WINDOW_X/2
 
     # TODO: Draw score at the top right corner of the window
-    score = str(state['score'])
-    # canvas = Canvas(window, width = 1000, height = 750, bg = "SpringGreen2")
-    # canvas.create_text(300, 50, text="HELLO WORLD", fill="black", font=('Helvetica 15 bold'))
-    # canvas.pack()
-    # canva.grid(row=0, column=0)
 
-    box_width = WINDOW_X/2
+    # Score
+    score = 0
+    score = str(state['score'])
+    canvas = Canvas(window, width=150, height=40, bg=BACKGROUND_COLOR)
+    canvas.create_text(75, 10, text=("Score:", score),
+                       fill="white", font=(FONT, 14), anchor="n")
+    canvas.config(highlightthickness=0, borderwidth=0)
+    canvas.pack(side=TOP, anchor="ne")
+
+    # Title
+    title = Canvas(window, bg=BACKGROUND_COLOR, width=150, height=40)
+    title.create_text(75, 20, text="LearnType",
+                      fill="white", font=(FONT, 16, BOLD))
+    title.place(width=box_width)
+    title.pack(side=TOP, anchor="center")
 
     # TODO: Draw current text based on text, char_states, and cursor_index
     text_data = state['text']
-
     cursor = state['cursor_index']
 
+    _text = Text(window, wrap=WORD, font=(FONT, 18), autoseparators=TRUE)
+
     # Set colors
-    _text = Text(window, wrap=WORD, font=(FONT, 18))
     _text.tag_configure("wrong", background="red", foreground="black")
     _text.tag_configure("correct", foreground="white")
     _text.tag_configure("untyped", foreground="grey")
@@ -104,7 +115,6 @@ def draw_game_ui(window, state: dict):
             _text.insert(END, text_data[i], "wrong")
         elif state["char_states"][i] == 0:
             # Grey
-
             # Show cursor in current location
             if cursor == i:
                 _text.insert(END, text_data[i], "location")
@@ -113,11 +123,27 @@ def draw_game_ui(window, state: dict):
 
     _text.place(x=10, y=10, width=box_width)
     _text.config(highlightthickness=0, borderwidth=0,
-                 background=BACKGROUND_COLOR)
-    _text.pack()
+                 background=BACKGROUND_COLOR, state="disabled", cursor="dotbox")
+    _text.pack(side=TOP, expand=TRUE)
 
 
 def draw_end_screen_ui(window, state: dict):
     """Draw the end screen with the given game state."""
-    print("end")
-    pass
+    final_score = str(state['score'])
+
+    txt = Label(window, text=("Score:", final_score),
+                background=BACKGROUND_COLOR, font=(FONT, 60), foreground="white")
+    txt.pack()
+
+    Reset = Button(text="Play Again", height=5, width=50, font=(FONT, 16),
+                   bg=BACKGROUND_COLOR, foreground='white', command=lambda: end_cond(window))
+    Reset.pack(pady=10, padx=0)
+
+    Exit = Button(text="Exit", height=5, width=50, font=(FONT, 16),
+                  bg=BACKGROUND_COLOR, foreground='white', command=quit)
+    Exit.pack(pady=0, padx=0)
+
+
+def end_cond(window):
+    window.destroy()
+    main.main()
