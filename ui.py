@@ -50,34 +50,37 @@ def clear_window(window):
         widget.destroy()
 
 
-def draw_ui(window, state: dict):
+def draw_ui(window, state: dict, config: dict):
     """Draw a text area with the given the current game state."""
     clear_window(window)
 
     # Draw the game screen if the game is not complete, otherwise draw the end screen
     if state['is_complete']:
         # End Screen
-        txt = Label(window, text="Game Over!", background=BACKGROUND_COLOR, font=(
-            FONT, 60), foreground="#323535", bg="#e2b714")
-        txt.pack(side="top", fill=X, expand=False)
-        draw_end_screen_ui(window, state)
+        draw_end_screen_ui(window, state, config)
     else:
         # Normal Screen
-        txt = Label(window, text="Game On!", background=BACKGROUND_COLOR, font=(
-            FONT, 60), foreground="#323535", bg="#e2b714")
-        txt.pack(side="top", fill=X, expand=False)
-        draw_game_ui(window, state)
+        draw_game_ui(window, state, config)
 
 
-def draw_game_ui(window, state: dict):
+def draw_game_ui(window, state: dict, config: dict):
     """Draw the game screen with the given game state."""
     global BACKGROUND_COLOR
     box_width = WINDOW_X/2
 
-    # TODO: Draw score at the top right corner of the window
+    txt = Label(window, text="Game On!", background=BACKGROUND_COLOR, font=(
+        FONT, 60), foreground="#323535", bg="#e2b714")
+    txt.pack(side="top", fill=X, expand=False)
+
+    # Name
+    name = config['name'] if 'name' in config else "User"
+    canvas = Canvas(window, width=150, height=40, bg=BACKGROUND_COLOR)
+    canvas.create_text(75, 10, text=("Name:", name),
+                       fill="white", font=(FONT, 14), anchor="n")
+    canvas.config(highlightthickness=0, borderwidth=0)
+    canvas.pack(side=TOP)
 
     # Score
-    score = 0
     score = str(state['score'])
     canvas = Canvas(window, width=150, height=40, bg=BACKGROUND_COLOR)
     canvas.create_text(75, 10, text=("Score:", score),
@@ -92,7 +95,7 @@ def draw_game_ui(window, state: dict):
     title.place(width=box_width)
     title.pack(side=TOP, anchor="center")
 
-    # TODO: Draw current text based on text, char_states, and cursor_index
+    # Draw current text based on text, char_states, and cursor_index
     text_data = state['text']
     cursor = state['cursor_index']
 
@@ -127,11 +130,22 @@ def draw_game_ui(window, state: dict):
     _text.pack(side=TOP, expand=TRUE)
 
 
-def draw_end_screen_ui(window, state: dict):
+def draw_end_screen_ui(window, state: dict, config: dict):
     """Draw the end screen with the given game state."""
+
+    txt = Label(window, text="Game Over!", background=BACKGROUND_COLOR, font=(
+        FONT, 60), foreground="#323535", bg="#e2b714")
+    txt.pack(side="top", fill=X, expand=False)
+
+    highscore = config['highscore'] if 'highscore' in config else 0
+
     final_score = str(state['score'])
 
-    txt = Label(window, text=("Score:", final_score),
+    txt = Label(window, text=("Score:", final_score,),
+                background=BACKGROUND_COLOR, font=(FONT, 60), foreground="white")
+    txt.pack()
+
+    txt = Label(window, text=("Highscore:", highscore,),
                 background=BACKGROUND_COLOR, font=(FONT, 60), foreground="white")
     txt.pack()
 
