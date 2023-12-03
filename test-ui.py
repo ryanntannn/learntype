@@ -3,13 +3,13 @@ import input
 import game
 import load
 
-state = load.temp_init_game_state()
-
+state = load.init_game_state()
 
 def main():
     """Main function when the program is run."""
     global state
     window = ui.init_window()
+    
 
     # Callback function for when a key is pressed
     def key_pressed(key):
