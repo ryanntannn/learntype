@@ -1,3 +1,6 @@
+from tkinter.simpledialog import askstring
+
+
 def bind_keypress_event(window, callback):
     """Bind a keypress event to the window. The callback function is called when a key is pressed, with the key as the argument."""
 
@@ -16,3 +19,9 @@ def bind_backspace_event(window, callback):
         callback("Backspace")
 
     window.bind("<BackSpace>", _callback)
+
+
+def get_name():
+    """Get the user's name."""
+    name = askstring("Name", "What is your name?")
+    return name
