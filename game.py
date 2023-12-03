@@ -48,10 +48,6 @@ def on_key_press(key, _state: dict):
     """ Callback function for when a key is pressed. """
     state = _state.copy()
 
-    if is_game_complete(state):
-        handle_game_complete(state)
-        return state
-
     if is_backspace(key):
         handle_backspace(state)
         return state
@@ -67,5 +63,8 @@ def on_key_press(key, _state: dict):
             state["score"] = state["score"] + i
         else:
             state["score"] = state["score"] + i
+
+    if is_game_complete(state):
+        handle_game_complete(state)
 
     return state
