@@ -51,7 +51,7 @@ def main():
 
     # Draw the first game window
     ui.draw_ui(window, state)
-
+    
     window.mainloop()
 
 

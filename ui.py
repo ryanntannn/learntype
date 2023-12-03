@@ -3,6 +3,8 @@
 from tkinter import *
 import sys
 from tkinter.font import BOLD
+import main
+
 
 # Window size in pixels
 WINDOW_X = 350
@@ -11,7 +13,10 @@ WINDOW_Y = 200
 IS_MAC = sys.platform == "darwin"
 
 FONT = "Menlo" if IS_MAC else "Consolas"
+
+#Background
 BACKGROUND_COLOR = "#323437"  # HEX format
+FILE_PATH = "score_test1.jpeg"
 
 print(sys.platform)
 
@@ -74,6 +79,7 @@ def draw_game_ui(window, state: dict):
     # TODO: Draw score at the top right corner of the window
 
     #Score
+    score = 0
     score = str(state['score'])
     canvas = Canvas(window, width = 150, height = 40, bg = BACKGROUND_COLOR)
     canvas.create_text(75, 10, text=("Score:", score), fill="white", font=(FONT,14), anchor="n")
@@ -87,7 +93,6 @@ def draw_game_ui(window, state: dict):
     title.place(width=box_width)
     title.pack(side=TOP, anchor="center")
     
-
     # TODO: Draw current text based on text, char_states, and cursor_index
     text_data = state['text']
     cursor = state['cursor_index']
@@ -125,5 +130,20 @@ def draw_game_ui(window, state: dict):
 
 def draw_end_screen_ui(window, state: dict):
     """Draw the end screen with the given game state."""
-    print("end")
-    pass
+    final_score = str(state['score'])
+
+    txt = Label(window, text=("Score:", final_score), background=BACKGROUND_COLOR
+                      ,font=(FONT, 60), foreground="white")
+    txt.pack()
+
+    Reset = Button(text = "Play Again", height=5, width=50, font=(FONT, 16),
+                   bg=BACKGROUND_COLOR, foreground='white', command = lambda: end_cond(window))
+    Reset.pack(pady = 10, padx = 0)
+
+    Exit = Button(text = "Exit", height=5, width=50, font=(FONT, 16),
+                   bg=BACKGROUND_COLOR, foreground='white', command = quit)
+    Exit.pack(pady = 0, padx = 0)
+
+def end_cond(window):
+    window.destroy()
+    main.main()
