@@ -8,57 +8,64 @@ def is_game_complete(state: dict):
 
 def handle_game_complete(state: dict):  # Mutates the state
     """Handle the game completion."""
-    # TODO: Set the is_complete key in the state to True
+    state['is_complete'] = True
+
 
 def is_backspace(key):
     """Return True if the key is a backspace, False otherwise."""
-    return False  # TODO: Implement this function
+    return key == "Backspace"
 
 
 def handle_backspace(state: dict):
     """Handle the backspace key."""
-    # TODO: Should decrease the cursor index by 1 if the cursor index is not 0
-    # TODO: Should not change the cursor index if the cursor index is 0
-    # TODO: Should update the char_states based on the cursor index
+    if state["cursor_index"] != 0:
+        state["cursor_index"] -= 1
+    else:
+        state["cursor_index"] = 0
+    state["char_states"][state["cursor_index"]] = 0
 
 
 def is_key_correct(key, state: dict):
     """Return True if the key is correct, False otherwise."""
-    return False  # TODO: Implement this function
+    return key == state["text"][state["cursor_index"]]
 
 
 def handle_correct_key(key, state: dict):  # Mutates the state
     """Handle the correct key."""
-    # TODO: Should update the cursor index
-    # TODO: Update char_states based on the cursor index
-    # TODO: Update score based on the cursor index
+    _prev_cursor_index = state['cursor_index']
+    state['cursor_index'] += 1
+    state['char_states'][_prev_cursor_index] = 1
 
 
 def handle_incorrect_key(key, state: dict):  # Mutates the state
     """Handle the incorrect key."""
-    # TODO: Should update the cursor index
-    # TODO: Update char_states based on the cursor index
+    _prev_cursor_index = state['cursor_index']
+    state['cursor_index'] += 1
+    state['char_states'][_prev_cursor_index] = 2
 
 
 def on_key_press(key, _state: dict):
-    """Callback function for when a key is pressed."""
+    """ Callback function for when a key is pressed. """
     state = _state.copy()
 
-    # TODO: Remove this example, which increments the score by 1 when any key is pressed, and displays the time since the previous keypress
-    state["score"] = _state["score"] + 1
-    previous_timestamp = _state["previous_timestamp"]
-    timestamp = time.time()
-    delta_time = timestamp - previous_timestamp
-    print(state["score"], delta_time, key)
+    if is_game_complete(state):
+        handle_game_complete(state)
+        return state
 
-    # Refer to main.py for the state key schema
+    if is_backspace(key):
+        handle_backspace(state)
+        return state
 
-    # TODO: Handle edge case when game is complete, i.e. cursor_index == len(text)
+    if is_key_correct(key, state):
+        handle_correct_key(key, state)
+    else:
+        handle_incorrect_key(key, state)
 
-    # TODO: Handle edge case when backspace is pressed
+    length = len(state["char_states"])
+    for i in range(length):
+        if i == 1:
+            state["score"] = state["score"] + i
+        else:
+            state["score"] = state["score"] + i
 
-    # TODO: Check if the key pressed is the correct key based on the cursor index and the text, and handle it accordingly
-
-    # Last step: Update the previous_timestamp key in the state
-    state["previous_timestamp"] = timestamp
     return state
