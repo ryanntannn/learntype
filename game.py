@@ -58,14 +58,15 @@ def on_key_press(key, _state: dict):
 
     if is_key_correct(key, state):
         handle_correct_key(key, state)
+
     else:
         handle_incorrect_key(key, state)
 
-    length = len(state["char_states"])
-    for i in range(length):
-        if i == 1:
-            state["score"] = state["score"] + i
+    #length = len(state["char_states"])
+    for element in state["char_states"]:
+        if element == 1:
+            state["score"] = state["score"] + element
         else:
-            state["score"] = state["score"] + i
+            state["score"] = state["score"] -element
 
     return state
