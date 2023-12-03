@@ -1,3 +1,5 @@
+import json
+
 import ui
 import random
 from tkinter import *
@@ -48,26 +50,49 @@ DEFAULT_STATE = {
         "is_complete": False,
     }'''
 
+
 def init_game_state():
-	""" Initialize the game state. """
-	file_name=filedialog.askopenfilename(initialdir='/', title='Select a text file', filetypes=(('Text files', '*.txt*'),('all files', '*.*')))
-	
-	# Making new state dictionary
-	new_state=DEFAULT_STATE.copy()
-	
+    """ Initialize the game state. """
+    file_name = filedialog.askopenfilename(
+        initialdir='./', title='Select a text file', filetypes=(('Text files', '.txt'), ('all files', '*.*')))
+
+    # Making new state dictionary
+    new_state = DEFAULT_STATE.copy()
+
     # Opening users file
-	input_file=open(file_name, 'r')
-	
+    input_file = open(file_name, 'r')
+
     # Reading file and making a list of paragraphs
-	new_text_list=input_file.read().split('\n\n')
-	
+    new_text_list = input_file.read().split('\n\n')
+
     # Choosing a random paragraph
-	new_text=new_text_list[random.randint(0, len(new_text_list)-1)]
-	
-	# Assigning new paragraph to the new_state dictionary
-	new_state["text"]=new_text
-	
+    new_text = new_text_list[random.randint(0, len(new_text_list)-1)]
+
+    # Assigning new paragraph to the new_state dictionary
+    new_state["text"] = new_text
+
     # Assigning new character state to the new_state dictionary
-	new_state["char_states"]=[0]*len(new_text)
-	
-	return new_state
+    new_state["char_states"] = [0]*len(new_text)
+
+    return new_state
+
+
+def load_user_config():
+    """Load the user config."""
+    try:
+        file = open("config.json", "r")
+    except FileNotFoundError:
+        file = open("config.json", "w")
+        json.dump({}, file)
+        file.close()
+        return {}
+    config = json.load(file)
+    file.close()
+    return config
+
+
+def write_user_config(config):
+    """Write the user config."""
+    file = open("config.json", "w")
+    json.dump(config, file)
+    file.close()
