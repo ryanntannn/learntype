@@ -20,6 +20,7 @@ TEST_STATE = {
     # Timestamp of the previous keypress, -1 if no previous keypress
     "previous_timestamp": -1,
     "is_complete": False,
+    "combo": 0,
 }
 
 
@@ -61,6 +62,7 @@ class TestGame(unittest.TestCase):
         self.assertEqual(_test_state["char_states"][0], 0)
 
     def test_is_key_correct(self):
+        TEST_STATE["cursor_index"] = 0
         # Should be true when the key is correct
         self.assertTrue(game.is_key_correct("H", TEST_STATE))
         # Should be false when the key is incorrect
