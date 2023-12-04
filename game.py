@@ -30,11 +30,22 @@ def is_key_correct(key, state: dict):
     return key == state["text"][state["cursor_index"]]
 
 
+def get_score_delta(state: dict):
+    """Return the score delta."""
+    if state["previous_timestamp"] <= 0:
+        return 0
+
+    print(time.time(), state["previous_timestamp"])
+    return int(1/(time.time() - state["previous_timestamp"]) * (state["combo"]+1))
+
+
 def handle_correct_key(key, state: dict):  # Mutates the state
     """Handle the correct key."""
     _prev_cursor_index = state['cursor_index']
     state['cursor_index'] += 1
     state['char_states'][_prev_cursor_index] = 1
+    state["score"] += get_score_delta(state)
+    state["combo"] += 1
 
 
 def handle_incorrect_key(key, state: dict):  # Mutates the state
@@ -42,6 +53,8 @@ def handle_incorrect_key(key, state: dict):  # Mutates the state
     _prev_cursor_index = state['cursor_index']
     state['cursor_index'] += 1
     state['char_states'][_prev_cursor_index] = 2
+    state["score"] -= get_score_delta(state)
+    state["combo"] = 0
 
 
 def on_key_press(key, _state: dict):
@@ -58,14 +71,9 @@ def on_key_press(key, _state: dict):
     else:
         handle_incorrect_key(key, state)
 
-    #length = len(state["char_states"])
-    for element in state["char_states"]:
-        if element == 1:
-            state["score"] = state["score"] + element
-        else:
-            state["score"] = state["score"] -element
-
     if is_game_complete(state):
         handle_game_complete(state)
+
+    state["previous_timestamp"] = time.time()
 
     return state

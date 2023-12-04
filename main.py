@@ -22,6 +22,7 @@ state = {
     # Timestamp of the previous keypress, -1 if no previous keypress
     "previous_timestamp": -1,
     "is_complete": False,
+    "combo": 0,
 }
 
 config = {}
