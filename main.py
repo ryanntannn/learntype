@@ -14,7 +14,7 @@ state = {
         0,
         0,
         0,
-        0,
+        0, 
         0,
         0,
     ],  # 0 = untyped, 1 = correct, 2 = incorrect

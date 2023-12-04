@@ -74,8 +74,8 @@ def draw_game_ui(window, state: dict, config: dict):
 
     # Name
     name = config['name'] if 'name' in config else "User"
-    canvas = Canvas(window, width=150, height=40, bg=BACKGROUND_COLOR)
-    canvas.create_text(75, 10, text="Welcome back " + name,
+    canvas = Canvas(window, width=300, height=40, bg=BACKGROUND_COLOR)
+    canvas.create_text(150, 10, text="Welcome back " + name,
                        fill="white", font=(FONT, 14), anchor="n")
     canvas.config(highlightthickness=0, borderwidth=0)
     canvas.pack(side=TOP)
