@@ -23,6 +23,7 @@ def handle_backspace(state: dict):
     else:
         state["cursor_index"] = 0
     state["char_states"][state["cursor_index"]] = 0
+    state["combo"] = 0
 
 
 def is_key_correct(key, state: dict):

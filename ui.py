@@ -133,6 +133,7 @@ def draw_game_ui(window, state: dict, config: dict):
 
 def draw_end_screen_ui(window, state: dict, config: dict):
     """Draw the end screen with the given game state."""
+    global BACKGROUND_COLOR
 
     txt = Label(window, text="Game Over!", background=BACKGROUND_COLOR, font=(
         FONT, 60), foreground="#323535", bg="#e2b714")
@@ -142,12 +143,22 @@ def draw_end_screen_ui(window, state: dict, config: dict):
 
     final_score = str(state['score'])
 
-    txt = Label(window, text=("Score:", final_score,),
-                background=BACKGROUND_COLOR, font=(FONT, 60), foreground="white")
+    txt = Label(window, text=("Score:", final_score,), height=2,
+                background=BACKGROUND_COLOR, font=(FONT, 23), foreground="white")
     txt.pack()
 
-    txt = Label(window, text=("Highscore:", highscore,),
-                background=BACKGROUND_COLOR, font=(FONT, 60), foreground="white")
+    txt = Label(window, text=("Highscore:", highscore,), height=2,
+                background=BACKGROUND_COLOR, font=(FONT, 18), foreground="white")
+    txt.pack()
+
+    words_typed = str(state['text'].count(' ')+1)
+    txt = Label(window, text="Words Typed: " + words_typed, height=2,
+                background=BACKGROUND_COLOR, font=(FONT, 18), foreground="white")
+    txt.pack()
+
+    characters_typed = str(len(state['text']))
+    txt = Label(window, text="Characters Typed: " + characters_typed, height=2,
+                background=BACKGROUND_COLOR, font=(FONT, 18), foreground="white")
     txt.pack()
 
     Reset = Button(text="Play Again", height=5, width=50, font=(FONT, 16),
